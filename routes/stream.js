@@ -34,6 +34,7 @@ router.get('/', function(req, res, next) {
       flag: true,
       message: `${req.protocol}://${req.hostname}/download/${file}`
     });
+    console.log(`${req.protocol}://${req.hostname}/download/${file}`);
   }).catch(function(error) {
     res.send({
       flag: false,

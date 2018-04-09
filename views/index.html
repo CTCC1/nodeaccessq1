@@ -9,28 +9,32 @@
     <p>Welcome to <%= title %> and please input link to hls playlist below</p>
     <form id="main" name="main">
       <input type="url" id="hlsurl" name="hlsurl">
-      <button onclick="myFunction()">submit</button>
+      <p>
+        <input type="submit" value="Submit">
+      </p>
+      <p>The resulted local hosted hls playlist:(will show below when you submit)</p>
       <div class="output"></div>
     </form>
     <p id="print" type="url"></p>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-      function myFunction() {
+      $("#main").submit(function(e) {
+        e.preventDefault();
         var url = `/stream?${$("#main").serialize()}`;
-        $(".output").html(`<p class='url'></p>`);
+        $(".output").html(`<p class="url"></p>`);
         // from https://stackoverflow.com/questions/3828104/how-to-get-request-url-in-a-jquery-get-ajax-request
         $.ajax({
           type: "GET",
           url: url,
-          flag: function(result){
+          success: function(result){
             if(result.flag){
-              $(".output").html(`<p class='url'>${result.message}</p>`);
+              $(".output").html(`<p class="url">${result.message}</p>`);
             }else{
               alert(result.message);
             }
           }
          });
-      }
+      });
     </script>
   </body>
 </html>

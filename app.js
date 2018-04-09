@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var cors = require('cors');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
@@ -8,6 +9,7 @@ var indexRouter = require('./routes/index');
 var streamRouter = require('./routes/stream');
 
 var app = express();
+app.use(cors());
 
 /* https://stackoverflow.com/questions/17911228/how-do-i-use-html-as-the-view-engine-in-express */
 
