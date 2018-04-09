@@ -6,16 +6,15 @@
 
 var express = require('express');
 var router = express.Router();
-
 var path = require('path');
 var fetcher = require('../hls-fetcher/src');
-
-const concur = 5;
-const location = path.join(process.cwd(), 'public/download');
 
 /* route GET stream. */
 router.get('/', function(req, res, next) {
   /* illegal input url to be handled*/
+
+  const concur = 5;
+  const location = path.join(process.cwd(), 'public/download/');
 
   /* https://stackoverflow.com/questions/5675315/node-js-regular-expression-to-get-from-and-to */
   var pattern = /(\w+)(\.\w+)+(?!.*(\w+)(\.\w+)+)/i;
@@ -31,9 +30,15 @@ router.get('/', function(req, res, next) {
   };
 
   fetcher(options).then(function() {
-    res.send(`http://{req.hostname}:3000/download/${file}`);
+    res.send({
+      flag: true,
+      message: `${req.protocol}://${req.hostname}/download/${file}`
+    });
   }).catch(function(error) {
-    res.send('ERROR', error);
+    res.send({
+      flag: false,
+      message: `ERROR when fetching hls playlist`
+    });
   });
 
 });

@@ -3,9 +3,34 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+  </head>  
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <p>Welcome to <%= title %> and please input link to hls playlist below</p>
+    <form id="main" name="main">
+      <input type="url" id="hlsurl" name="hlsurl">
+      <button onclick="myFunction()">submit</button>
+      <div class="output"></div>
+    </form>
+    <p id="print" type="url"></p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      function myFunction() {
+        var url = `/stream?${$("#main").serialize()}`;
+        $(".output").html(`<p class='url'></p>`);
+        // from https://stackoverflow.com/questions/3828104/how-to-get-request-url-in-a-jquery-get-ajax-request
+        $.ajax({
+          type: "GET",
+          url: url,
+          flag: function(result){
+            if(result.flag){
+              $(".output").html(`<p class='url'>${result.message}</p>`);
+            }else{
+              alert(result.message);
+            }
+          }
+         });
+      }
+    </script>
   </body>
 </html>
