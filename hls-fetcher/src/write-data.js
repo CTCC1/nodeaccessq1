@@ -6,10 +6,10 @@ var aesDecrypter = require('aes-decrypter').Decrypter;
 var path = require('path');
 
 var writeFile = function(file, content) {
-  return mkdirp(path.dirname(file)).then(function() {
-    return fs.writeFileAsync(file, content);
+  return mkdirp(path.dirname(file.split('?')[0])).then(function() {
+    return fs.writeFileAsync(file.split('?')[0], content);
   }).then(function() {
-    console.log('Finished: ' + path.relative('.', file));
+    console.log('Finished: ' + path.relative('.', file.split('?')[0]));
   });
 };
 

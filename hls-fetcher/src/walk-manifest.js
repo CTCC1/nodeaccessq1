@@ -129,7 +129,7 @@ var walkPlaylist = function(decrypt, basedir, uri, parent, manifestIndex) {
 			return;
 		}
 		// put segments in manifest-name/segment-name.ts
-		s.file = path.join(path.dirname(manifest.file), path.basename(s.uri));
+		s.file = path.join(path.dirname(manifest.file), s.uri);
 		if (!isAbsolute(s.uri)) {
 			s.uri = joinURI(path.dirname(manifest.uri), s.uri);
 		}
@@ -137,7 +137,7 @@ var walkPlaylist = function(decrypt, basedir, uri, parent, manifestIndex) {
 			s.key = key;
 			s.key.iv = s.key.iv || new Uint32Array([0, 0, 0, manifest.parsed.mediaSequence, i]);
 		}
-		manifest.content = new Buffer(manifest.content.toString().replace(s.uri, path.basename(s.uri)));
+		manifest.content = new Buffer(manifest.content.toString());
 		resources.push(s);
 	});
 
