@@ -49,9 +49,9 @@ router.get('/', function(req, res, next) {
   fetcher(options).then(function() {
     res.send({
       flag: true,
-      message: `${req.protocol}://${req.hostname}/download/${file}`
+      message: `${req.protocol}://${req.hostname}:3000/download/${file}`
     });
-    console.log(`${req.protocol}://${req.hostname}/download/${file}`);
+    console.log(`${req.protocol}://${req.hostname}:3000/download/${file}`);
   }).catch(function(error) {
     res.send({
       flag: false,
